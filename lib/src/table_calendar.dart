@@ -1,6 +1,7 @@
 // Copyright 2019 Aleksander Woźniak
 // SPDX-License-Identifier: Apache-2.0
 
+import 'dart:ffi';
 import 'dart:math';
 
 import 'package:flutter/widgets.dart';
@@ -202,7 +203,9 @@ class TableCalendar<T> extends StatefulWidget {
   final void Function(CalendarFormat format)? onFormatChanged;
 
   /// Called when the calendar is created. Exposes its PageController.
-  final void Function(PageController pageController)? onCalendarCreated;
+  final void Function(
+          PageController pageController, firstDayOfMonth, lastDayOfMonth)?
+      onCalendarCreated;
 
   /// Creates a `TableCalendar` widget.
   TableCalendar({
@@ -481,7 +484,10 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
           child: TableCalendarBase(
             onCalendarCreated: (pageController) {
               _pageController = pageController;
-              widget.onCalendarCreated?.call(pageController);
+              widget.onCalendarCreated?.call(
+                  pageController,
+                  _firstDayOfMonth(_focusedDay.value),
+                  _lastDayOfMonth(_focusedDay.value));
             },
             focusedDay: _focusedDay.value,
             calendarFormat: widget.calendarFormat,
