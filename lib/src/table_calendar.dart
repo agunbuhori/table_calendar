@@ -1,7 +1,6 @@
 // Copyright 2019 Aleksander Woźniak
 // SPDX-License-Identifier: Apache-2.0
 
-import 'dart:ffi';
 import 'dart:math';
 
 import 'package:flutter/widgets.dart';
@@ -484,10 +483,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
           child: TableCalendarBase(
             onCalendarCreated: (pageController) {
               _pageController = pageController;
-              widget.onCalendarCreated?.call(
-                  pageController,
-                  _firstDayOfMonth(_focusedDay.value),
-                  _lastDayOfMonth(_focusedDay.value));
+              widget.onCalendarCreated?.call(pageController);
             },
             focusedDay: _focusedDay.value,
             calendarFormat: widget.calendarFormat,
